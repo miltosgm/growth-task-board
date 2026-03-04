@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growth-onomics Task Board</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f4f5f7;
+    color: #1a1a2e;
+    min-height: 100vh;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 0 28px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .topbar .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .topbar .brand .dot {
+    width: 10px; height: 10px;
+    background: #6c63ff;
+    border-radius: 50%;
+  }
+  .topbar .meta { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .agent-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(108,99,255,0.18);
+    border: 1px solid rgba(108,99,255,0.35);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .agent-badge .pulse {
+    width: 8px; height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 14px 28px;
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .stat { display: flex; align-items: center; gap: 10px; }
+  .stat-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .stat-icon.purple { background: #ede9fe; }
+  .stat-icon.blue   { background: #dbeafe; }
+  .stat-icon.green  { background: #dcfce7; }
+  .stat-icon.red    { background: #fee2e2; }
+  .stat-text .num   { font-size: 20px; font-weight: 700; line-height: 1; }
+  .stat-text .label { font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+  .stats-bar .divider { width: 1px; height: 36px; background: #e5e7eb; }
+  .stats-bar .right { margin-left: auto; display: flex; gap: 10px; }
+
+  .btn {
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    border: none; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-primary { background: #6c63ff; color: #fff; }
+  .btn-primary:hover { background: #5b52e0; }
+  .btn-ghost { background: transparent; color: #6b7280; border: 1px solid #e5e7eb; }
+  .btn-ghost:hover { background: #f9fafb; }
+
+  /* CLIENT TABS */
+  .client-nav {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0 28px;
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    overflow-x: auto;
+  }
+  .client-tab {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    color: #6b7280;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: all 0.15s;
+    border-radius: 6px 6px 0 0;
+  }
+  .client-tab:hover { color: #1a1a2e; background: #f9fafb; }
+  .client-tab.active { color: #6c63ff; border-bottom-color: #6c63ff; background: #faf9ff; }
+  .client-tab .tab-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 10px;
+    background: #f1f5f9;
+    color: #6b7280;
+  }
+  .client-tab.active .tab-badge { background: #ede9fe; color: #6c63ff; }
+
+  /* Client color dots */
+  .cdot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .cdot-all    { background: #6c63ff; }
+  .cdot-karma  { background: #f59e0b; }
+  .cdot-cdma   { background: #0ea5e9; }
+  .cdot-hola   { background: #22c55e; }
+  .cdot-stubs  { background: #ec4899; }
+
+  /* MAIN */
+  .main {
+    padding: 22px 28px;
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    min-height: calc(100vh - 175px);
+  }
+
+  /* COLUMNS */
+  .column { flex: 0 0 290px; display: flex; flex-direction: column; gap: 10px; }
+  .col-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 9px 13px; border-radius: 10px;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.6px;
+  }
+  .col-header .count { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; opacity: 0.75; }
+  .col-todo    .col-header { background: #f1f5f9; color: #475569; }
+  .col-todo    .col-header .count { background: #e2e8f0; }
+  .col-active  .col-header { background: #ede9fe; color: #5b21b6; }
+  .col-active  .col-header .count { background: #ddd6fe; }
+  .col-done    .col-header { background: #dcfce7; color: #15803d; }
+  .col-done    .col-header .count { background: #bbf7d0; }
+  .col-blocked .col-header { background: #fee2e2; color: #dc2626; }
+  .col-blocked .col-header .count { background: #fecaca; }
+  .col-body { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+  /* TASK CARD */
+  .task-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px 15px 13px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .task-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .task-card .priority-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; border-radius: 12px 0 0 12px;
+  }
+  .priority-high   { background: #ef4444; }
+  .priority-medium { background: #f59e0b; }
+  .priority-low    { background: #6b7280; }
+
+  .task-client-row {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 6px; padding-left: 4px;
+  }
+  .client-pill {
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 6px;
+  }
+  .cp-karma { background: #fef3c7; color: #92400e; }
+  .cp-cdma  { background: #dbeafe; color: #1d4ed8; }
+  .cp-hola  { background: #dcfce7; color: #15803d; }
+  .cp-stubs { background: #fce7f3; color: #9d174d; }
+  .cp-gen   { background: #f1f5f9; color: #475569; }
+
+  .task-title { font-size: 14px; font-weight: 600; color: #1a1a2e; margin-bottom: 5px; padding-left: 4px; }
+  .task-desc  { font-size: 12px; color: #6b7280; line-height: 1.5; padding-left: 4px; margin-bottom: 10px; }
+  .task-tags  { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; padding-left: 4px; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 500; }
+  .tag-seo     { background: #dbeafe; color: #1d4ed8; }
+  .tag-ads     { background: #fce7f3; color: #9d174d; }
+  .tag-content { background: #fef3c7; color: #92400e; }
+  .tag-dev     { background: #ede9fe; color: #5b21b6; }
+  .tag-report  { background: #dcfce7; color: #15803d; }
+
+  .progress-wrap { margin: 8px 0; padding-left: 4px; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: #9ca3af; margin-bottom: 4px; }
+  .progress-bar { height: 4px; background: #f1f5f9; border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #6c63ff, #a78bfa); transition: width 0.6s ease; }
+
+  .task-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+  .assignee  { display: flex; align-items: center; gap: 6px; }
+  .avatar    { width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+  .av-s { background: #6c63ff; }
+  .av-m { background: #0ea5e9; }
+  .av-a { background: #f59e0b; }
+  .assignee-name { font-size: 12px; color: #374151; font-weight: 500; }
+  .task-date { font-size: 11px; color: #9ca3af; }
+
+  .drop-zone {
+    border: 2px dashed #e5e7eb; border-radius: 10px;
+    padding: 16px; text-align: center;
+    color: #d1d5db; font-size: 12px;
+    cursor: pointer; transition: all 0.15s; margin-top: 4px;
+  }
+  .drop-zone:hover { border-color: #6c63ff; color: #6c63ff; background: #faf9ff; }
+
+  .empty-col { text-align: center; padding: 28px 10px; color: #d1d5db; font-size: 12px; }
+  .empty-col .icon { font-size: 26px; margin-bottom: 8px; }
+
+  /* MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: 16px; padding: 28px; width: 480px; max-width: 94vw; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal h2 { font-size: 18px; margin-bottom: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { font-size: 11px; font-weight: 700; color: #6b7280; display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 9px 13px; border: 1px solid #e5e7eb; border-radius: 8px;
+    font-size: 14px; font-family: inherit; color: #1a1a2e; outline: none; transition: border 0.15s;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: #6c63ff; box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 70px; }
+  .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+  @media (max-width: 640px) {
+    .stats-bar { flex-wrap: wrap; gap: 14px; }
+    .main { padding: 14px; }
+    .topbar, .stats-bar, .client-nav { padding-left: 14px; padding-right: 14px; }
+    .topbar .meta { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand"><span class="dot"></span>Growth-onomics Task Board</div>
+  <div class="meta">Assigned to AI Agent</div>
+  <div class="agent-badge"><span class="pulse"></span>Agent Online</div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-icon purple">📋</div>
+    <div class="stat-text"><div class="num" id="stat-total">0</div><div class="label">Total Tasks</div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="stat">
+    <div class="stat-icon blue">⚡</div>
+    <div class="stat-text"><div class="num" id="stat-active">0</div><div class="label">In Progress</div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="stat">
+    <div class="stat-icon green">✅</div>
+    <div class="stat-text"><div class="num" id="stat-done">0</div><div class="label">Completed</div></div>
+  </div>
+  <div class="divider"></div>
+  <div class="stat">
+    <div class="stat-icon red">🚫</div>
+    <div class="stat-text"><div class="num" id="stat-blocked">0</div><div class="label">Blocked</div></div>
+  </div>
+  <div class="right">
+    <button class="btn btn-ghost" onclick="clearDone()">Clear Done</button>
+    <button class="btn btn-primary" onclick="openModal()">+ New Task</button>
+  </div>
+</div>
+
+<!-- CLIENT TABS -->
+<div class="client-nav" id="client-nav">
+  <!-- rendered by JS -->
+</div>
+
+<!-- KANBAN BOARD -->
+<div class="main">
+  <div class="column col-todo">
+    <div class="col-header"><span>To Do</span><span class="count" id="count-todo">0</span></div>
+    <div class="col-body" id="col-todo"></div>
+    <div class="drop-zone" onclick="openModal('todo')">+ Add task</div>
+  </div>
+  <div class="column col-active">
+    <div class="col-header"><span>In Progress</span><span class="count" id="count-active">0</span></div>
+    <div class="col-body" id="col-active"></div>
+    <div class="drop-zone" onclick="openModal('active')">+ Add task</div>
+  </div>
+  <div class="column col-done">
+    <div class="col-header"><span>Done</span><span class="count" id="count-done">0</span></div>
+    <div class="col-body" id="col-done"></div>
+    <div class="drop-zone" onclick="openModal('done')">+ Add task</div>
+  </div>
+  <div class="column col-blocked">
+    <div class="col-header"><span>Blocked</span><span class="count" id="count-blocked">0</span></div>
+    <div class="col-body" id="col-blocked"></div>
+    <div class="drop-zone" onclick="openModal('blocked')">+ Add task</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>New Task</h2>
+    <div class="form-group">
+      <label>Task Title</label>
+      <input type="text" id="f-title" placeholder="What needs to be done?" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="f-desc" placeholder="More detail..."></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Client</label>
+        <select id="f-client">
+          <option value="karma">Karma Developers</option>
+          <option value="cdma">CDMA</option>
+          <option value="hola">Hola Prime</option>
+          <option value="stubs">ThePayStubs</option>
+          <option value="gen">General</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Assigned By</label>
+        <select id="f-assignee">
+          <option value="ST">Stelios</option>
+          <option value="MT">Muhammad Talha</option>
+          <option value="AI">AI Agent</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tag</label>
+        <select id="f-tag">
+          <option value="seo">SEO</option>
+          <option value="ads">Ads</option>
+          <option value="content">Content</option>
+          <option value="dev">Dev</option>
+          <option value="report">Report</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="f-priority">
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="f-status">
+        <option value="todo">To Do</option>
+        <option value="active">In Progress</option>
+        <option value="done">Done</option>
+        <option value="blocked">Blocked</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="addTask()">Add Task</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── CONFIG ──────────────────────────────────────────
+  const STORAGE_KEY = 'growth_tasks_v2';
+
+  const CLIENTS = {
+    all:   { label: 'All Clients', dot: 'cdot-all'   },
+    karma: { label: 'Karma Developers', dot: 'cdot-karma', pill: 'cp-karma' },
+    cdma:  { label: 'CDMA',            dot: 'cdot-cdma',  pill: 'cp-cdma'  },
+    hola:  { label: 'Hola Prime',      dot: 'cdot-hola',  pill: 'cp-hola'  },
+    stubs: { label: 'ThePayStubs',     dot: 'cdot-stubs', pill: 'cp-stubs' },
+    gen:   { label: 'General',         dot: 'cdot-all',   pill: 'cp-gen'   }
+  };
+
+  const ASSIGNEES = {
+    ST: { label: 'Stelios',   cls: 'av-s' },
+    MT: { label: 'M. Talha', cls: 'av-m' },
+    AI: { label: 'AI Agent', cls: 'av-a' }
+  };
+
+  const TAGS = {
+    seo:     { label: 'SEO',     cls: 'tag-seo'     },
+    ads:     { label: 'Ads',     cls: 'tag-ads'      },
+    content: { label: 'Content', cls: 'tag-content'  },
+    dev:     { label: 'Dev',     cls: 'tag-dev'      },
+    report:  { label: 'Report',  cls: 'tag-report'   }
+  };
+
+  let activeClient = 'all';
+
+  function loadTasks() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+    catch(e) { return []; }
+  }
+  function saveTasks(t) { localStorage.setItem(STORAGE_KEY, JSON.stringify(t)); }
+  function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function formatDate(ts) { return new Date(ts).toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }
+
+  // ─── CLIENT TABS ────────────────────────────────────
+  function renderClientNav() {
+    const tasks  = loadTasks();
+    const counts = {};
+    Object.keys(CLIENTS).forEach(k => counts[k] = 0);
+    tasks.forEach(t => { counts[t.client] = (counts[t.client]||0)+1; });
+    const total = tasks.length;
+
+    const nav = document.getElementById('client-nav');
+    nav.innerHTML = Object.entries(CLIENTS).map(([key, c]) => {
+      const n = key === 'all' ? total : (counts[key]||0);
+      return `<button class="client-tab ${activeClient===key?'active':''}" onclick="setClient('${key}')">
+        <span class="cdot ${c.dot}"></span>${c.label}
+        <span class="tab-badge">${n}</span>
+      </button>`;
+    }).join('');
+  }
+
+  function setClient(key) {
+    activeClient = key;
+    render();
+  }
+
+  // ─── RENDER ─────────────────────────────────────────
+  function renderCard(task) {
+    const a  = ASSIGNEES[task.assignee] || ASSIGNEES.AI;
+    const t  = TAGS[task.tag] || TAGS.seo;
+    const cl = CLIENTS[task.client] || CLIENTS.gen;
+
+    const progressHtml = task.status === 'active' && task.progress !== undefined ? `
+      <div class="progress-wrap">
+        <div class="progress-label"><span>Progress</span><span>${task.progress}%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${task.progress}%"></div></div>
+      </div>` : '';
+
+    return `<div class="task-card" onclick="cycleStatus('${task.id}')">
+      <div class="priority-bar priority-${task.priority}"></div>
+      <div class="task-client-row">
+        <span class="client-pill ${cl.pill||'cp-gen'}">${escHtml(cl.label)}</span>
+      </div>
+      <div class="task-title">${escHtml(task.title)}</div>
+      ${task.desc ? `<div class="task-desc">${escHtml(task.desc)}</div>` : ''}
+      <div class="task-tags"><span class="tag ${t.cls}">${t.label}</span></div>
+      ${progressHtml}
+      <div class="task-meta">
+        <div class="assignee">
+          <div class="avatar ${a.cls}">${task.assignee}</div>
+          <span class="assignee-name">${a.label}</span>
+        </div>
+        <span class="task-date">${formatDate(task.createdAt)}</span>
+      </div>
+    </div>`;
+  }
+
+  function render() {
+    renderClientNav();
+
+    const all   = loadTasks();
+    const tasks = activeClient === 'all' ? all : all.filter(t => t.client === activeClient);
+    const cols  = { todo:[], active:[], done:[], blocked:[] };
+    tasks.forEach(t => { if(cols[t.status]) cols[t.status].push(t); });
+
+    const empties = {
+      todo:    '<div class="empty-col"><div class="icon">📭</div>No tasks yet</div>',
+      active:  '<div class="empty-col"><div class="icon">💤</div>Nothing active</div>',
+      done:    '<div class="empty-col"><div class="icon">🏁</div>Nothing completed</div>',
+      blocked: '<div class="empty-col"><div class="icon">🔓</div>None blocked</div>'
+    };
+
+    ['todo','active','done','blocked'].forEach(s => {
+      const el = document.getElementById('col-'+s);
+      el.innerHTML = cols[s].length ? cols[s].map(renderCard).join('') : empties[s];
+      document.getElementById('count-'+s).textContent = cols[s].length;
+    });
+
+    // Stats always reflect current filter
+    document.getElementById('stat-total').textContent   = tasks.length;
+    document.getElementById('stat-active').textContent  = cols.active.length;
+    document.getElementById('stat-done').textContent    = cols.done.length;
+    document.getElementById('stat-blocked').textContent = cols.blocked.length;
+  }
+
+  // ─── ACTIONS ────────────────────────────────────────
+  const STATUS_CYCLE = { todo:'active', active:'done', done:'todo', blocked:'todo' };
+
+  function cycleStatus(id) {
+    const tasks = loadTasks();
+    const t = tasks.find(x => x.id === id);
+    if (!t) return;
+    t.status = STATUS_CYCLE[t.status];
+    if (t.status === 'active') t.progress = 25;
+    if (t.status === 'done')   t.progress = 100;
+    if (t.status === 'todo')   t.progress = 0;
+    saveTasks(tasks);
+    render();
+  }
+
+  function clearDone() {
+    saveTasks(loadTasks().filter(t => t.status !== 'done'));
+    render();
+  }
+
+  // ─── MODAL ──────────────────────────────────────────
+  let _defaultStatus = 'todo';
+
+  function openModal(status) {
+    _defaultStatus = status || 'todo';
+    document.getElementById('f-status').value = _defaultStatus;
+    document.getElementById('f-title').value  = '';
+    document.getElementById('f-desc').value   = '';
+    if (activeClient !== 'all') document.getElementById('f-client').value = activeClient;
+    document.getElementById('modal').classList.add('open');
+    setTimeout(() => document.getElementById('f-title').focus(), 50);
+  }
+
+  function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+  function addTask() {
+    const title = document.getElementById('f-title').value.trim();
+    if (!title) { document.getElementById('f-title').focus(); return; }
+    const tasks = loadTasks();
+    tasks.push({
+      id:        'task_' + Date.now(),
+      title,
+      desc:      document.getElementById('f-desc').value.trim(),
+      client:    document.getElementById('f-client').value,
+      assignee:  document.getElementById('f-assignee').value,
+      tag:       document.getElementById('f-tag').value,
+      priority:  document.getElementById('f-priority').value,
+      status:    document.getElementById('f-status').value,
+      progress:  document.getElementById('f-status').value === 'active' ? 25 : 0,
+      createdAt: Date.now()
+    });
+    saveTasks(tasks);
+    closeModal();
+    render();
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+  document.getElementById('f-title').addEventListener('keydown', e => { if(e.key==='Enter') addTask(); });
+
+  // ─── SEED ───────────────────────────────────────────
+  function seedIfEmpty() {
+    if (loadTasks().length > 0) return;
+    saveTasks([
+      { id:'t1', client:'hola',  title:'Audit holaprime.com SEO',         desc:'Full technical + content audit, identify quick wins',     assignee:'ST', tag:'seo',     priority:'high',   status:'todo',    progress:0,   createdAt: Date.now()-86400000*2 },
+      { id:'t2', client:'karma', title:'Google Ads campaign review',       desc:'Check ROAS for last 30 days, flag underperformers',      assignee:'MT', tag:'ads',     priority:'high',   status:'active',  progress:40,  createdAt: Date.now()-86400000   },
+      { id:'t3', client:'cdma',  title:'Monthly performance report',       desc:'Compile rankings, traffic, and conversion data',         assignee:'ST', tag:'report',  priority:'medium', status:'active',  progress:70,  createdAt: Date.now()-86400000*3 },
+      { id:'t4', client:'stubs', title:'ThePayStubs blog posts (x3)',      desc:'3 x long-form posts targeting HR keywords',              assignee:'MT', tag:'content', priority:'medium', status:'todo',    progress:0,   createdAt: Date.now()-3600000*5  },
+      { id:'t5', client:'cdma',  title:'CDMA landing page copy',           desc:'Rewrite hero section with AEO structure',                assignee:'ST', tag:'content', priority:'low',    status:'done',    progress:100, createdAt: Date.now()-86400000*5 },
+      { id:'t6', client:'karma', title:'Karma Developers backlinks',       desc:'Waiting on client to provide site access',               assignee:'MT', tag:'seo',     priority:'high',   status:'blocked', progress:0,   createdAt: Date.now()-86400000*4 },
+      { id:'t7', client:'hola',  title:'Hola Prime retargeting ads setup', desc:'Build Facebook retargeting audiences from pixel data',   assignee:'MT', tag:'ads',     priority:'medium', status:'todo',    progress:0,   createdAt: Date.now()-3600000*2  },
+      { id:'t8', client:'stubs', title:'Schema markup implementation',     desc:'Add FAQ + HowTo schema to top 10 landing pages',        assignee:'ST', tag:'dev',     priority:'medium', status:'active',  progress:55,  createdAt: Date.now()-86400000*1 }
+    ]);
+  }
+
+  seedIfEmpty();
+  render();
+</script>
+</body>
+</html>
