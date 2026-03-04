@@ -28,55 +28,32 @@
     z-index: 100;
     box-shadow: 0 2px 12px rgba(0,0,0,0.18);
   }
-  .topbar .brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-  }
-  .topbar .brand .dot {
-    width: 10px; height: 10px;
-    background: #6c63ff;
-    border-radius: 50%;
-  }
+  .topbar .brand { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+  .topbar .brand .dot { width: 10px; height: 10px; background: #6c63ff; border-radius: 50%; }
   .topbar .meta { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
   .agent-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(108,99,255,0.18);
-    border: 1px solid rgba(108,99,255,0.35);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 13px;
-    font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(108,99,255,0.18); border: 1px solid rgba(108,99,255,0.35);
+    border-radius: 20px; padding: 5px 14px; font-size: 13px; font-weight: 500;
   }
-  .agent-badge .pulse {
-    width: 8px; height: 8px;
-    background: #22c55e;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
+  .agent-badge .pulse { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .btn-team {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; border-radius: 8px; padding: 6px 14px;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-team:hover { background: rgba(255,255,255,0.18); }
 
   /* STATS BAR */
   .stats-bar {
-    background: #fff;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 14px 28px;
-    display: flex;
-    gap: 28px;
-    align-items: center;
+    background: #fff; border-bottom: 1px solid #e5e7eb;
+    padding: 14px 28px; display: flex; gap: 28px; align-items: center;
   }
   .stat { display: flex; align-items: center; gap: 10px; }
-  .stat-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
+  .stat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
   .stat-icon.purple { background: #ede9fe; }
   .stat-icon.blue   { background: #dbeafe; }
   .stat-icon.green  { background: #dcfce7; }
@@ -85,12 +62,7 @@
   .stat-text .label { font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
   .stats-bar .divider { width: 1px; height: 36px; background: #e5e7eb; }
   .stats-bar .right { margin-left: auto; display: flex; gap: 10px; }
-
-  .btn {
-    padding: 8px 16px; border-radius: 8px;
-    font-size: 13px; font-weight: 600;
-    border: none; cursor: pointer; transition: all 0.15s;
-  }
+  .btn { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; transition: all 0.15s; }
   .btn-primary { background: #6c63ff; color: #fff; }
   .btn-primary:hover { background: #5b52e0; }
   .btn-ghost { background: transparent; color: #6b7280; border: 1px solid #e5e7eb; }
@@ -98,72 +70,33 @@
 
   /* CLIENT TABS */
   .client-nav {
-    background: #fff;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 0 28px;
-    display: flex;
-    gap: 4px;
-    align-items: flex-end;
-    overflow-x: auto;
+    background: #fff; border-bottom: 1px solid #e5e7eb;
+    padding: 0 28px; display: flex; gap: 4px; align-items: flex-end; overflow-x: auto;
   }
   .client-tab {
-    padding: 10px 18px;
-    font-size: 13px;
-    font-weight: 600;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    color: #6b7280;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    transition: all 0.15s;
-    border-radius: 6px 6px 0 0;
+    padding: 10px 18px; font-size: 13px; font-weight: 600;
+    border: none; background: transparent; cursor: pointer;
+    border-bottom: 3px solid transparent; color: #6b7280;
+    white-space: nowrap; display: flex; align-items: center; gap: 7px;
+    transition: all 0.15s; border-radius: 6px 6px 0 0;
   }
   .client-tab:hover { color: #1a1a2e; background: #f9fafb; }
   .client-tab.active { color: #6c63ff; border-bottom-color: #6c63ff; background: #faf9ff; }
-  .client-tab .tab-badge {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 1px 7px;
-    border-radius: 10px;
-    background: #f1f5f9;
-    color: #6b7280;
-  }
+  .client-tab .tab-badge { font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 10px; background: #f1f5f9; color: #6b7280; }
   .client-tab.active .tab-badge { background: #ede9fe; color: #6c63ff; }
-
-  /* Client color dots */
-  .cdot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-  }
-  .cdot-all    { background: #6c63ff; }
-  .cdot-karma  { background: #f59e0b; }
-  .cdot-cdma   { background: #0ea5e9; }
-  .cdot-hola   { background: #22c55e; }
-  .cdot-stubs  { background: #ec4899; }
+  .cdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .cdot-all { background: #6c63ff; }
+  .cdot-karma { background: #f59e0b; }
+  .cdot-cdma  { background: #0ea5e9; }
+  .cdot-hola  { background: #22c55e; }
+  .cdot-stubs { background: #ec4899; }
 
   /* MAIN */
-  .main {
-    padding: 22px 28px;
-    display: flex;
-    gap: 18px;
-    overflow-x: auto;
-    min-height: calc(100vh - 175px);
-  }
+  .main { padding: 22px 28px; display: flex; gap: 18px; overflow-x: auto; min-height: calc(100vh - 195px); }
 
   /* COLUMNS */
   .column { flex: 0 0 290px; display: flex; flex-direction: column; gap: 10px; }
-  .col-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 9px 13px; border-radius: 10px;
-    font-size: 12px; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.6px;
-  }
+  .col-header { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; border-radius: 10px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; }
   .col-header .count { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; opacity: 0.75; }
   .col-todo    .col-header { background: #f1f5f9; color: #475569; }
   .col-todo    .col-header .count { background: #e2e8f0; }
@@ -177,32 +110,18 @@
 
   /* TASK CARD */
   .task-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 15px 15px 13px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    border: 1px solid #f0f0f0;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-    position: relative;
+    background: #fff; border-radius: 12px; padding: 15px 15px 13px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 1px solid #f0f0f0;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; position: relative;
   }
   .task-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-  .task-card .priority-bar {
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 4px; border-radius: 12px 0 0 12px;
-  }
+  .priority-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 12px 0 0 12px; }
   .priority-high   { background: #ef4444; }
   .priority-medium { background: #f59e0b; }
   .priority-low    { background: #6b7280; }
 
-  .task-client-row {
-    display: flex; align-items: center; gap: 6px;
-    margin-bottom: 6px; padding-left: 4px;
-  }
-  .client-pill {
-    font-size: 11px; font-weight: 600;
-    padding: 2px 8px; border-radius: 6px;
-  }
+  .task-client-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; padding-left: 4px; }
+  .client-pill { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
   .cp-karma { background: #fef3c7; color: #92400e; }
   .cp-cdma  { background: #dbeafe; color: #1d4ed8; }
   .cp-hola  { background: #dcfce7; color: #15803d; }
@@ -224,31 +143,27 @@
   .progress-bar { height: 4px; background: #f1f5f9; border-radius: 4px; overflow: hidden; }
   .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #6c63ff, #a78bfa); transition: width 0.6s ease; }
 
-  .task-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
-  .assignee  { display: flex; align-items: center; gap: 6px; }
-  .avatar    { width: 24px; height: 24px; border-radius: 50%; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
-  .av-s { background: #6c63ff; }
-  .av-m { background: #0ea5e9; }
-  .av-a { background: #f59e0b; }
-  .assignee-name { font-size: 12px; color: #374151; font-weight: 500; }
+  .task-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; padding-top: 8px; border-top: 1px solid #f3f4f6; }
+  .member-row { display: flex; align-items: center; gap: 5px; }
+  .avatar { width: 22px; height: 22px; border-radius: 50%; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+  .member-name { font-size: 12px; color: #374151; font-weight: 500; }
+  .member-label { font-size: 10px; color: #9ca3af; }
   .task-date { font-size: 11px; color: #9ca3af; }
 
   .drop-zone {
-    border: 2px dashed #e5e7eb; border-radius: 10px;
-    padding: 16px; text-align: center;
-    color: #d1d5db; font-size: 12px;
+    border: 2px dashed #e5e7eb; border-radius: 10px; padding: 16px;
+    text-align: center; color: #d1d5db; font-size: 12px;
     cursor: pointer; transition: all 0.15s; margin-top: 4px;
   }
   .drop-zone:hover { border-color: #6c63ff; color: #6c63ff; background: #faf9ff; }
-
   .empty-col { text-align: center; padding: 28px 10px; color: #d1d5db; font-size: 12px; }
   .empty-col .icon { font-size: 26px; margin-bottom: 8px; }
 
-  /* MODAL */
+  /* ─── MODAL BASE ─── */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
-  .modal { background: #fff; border-radius: 16px; padding: 28px; width: 480px; max-width: 94vw; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
-  .modal h2 { font-size: 18px; margin-bottom: 20px; }
+  .modal { background: #fff; border-radius: 16px; padding: 28px; width: 500px; max-width: 94vw; max-height: 88vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal h2 { font-size: 18px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .form-group { margin-bottom: 14px; }
   .form-group label { font-size: 11px; font-weight: 700; color: #6b7280; display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
@@ -261,6 +176,33 @@
   }
   .form-group textarea { resize: vertical; min-height: 70px; }
   .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+
+  /* ─── TEAM MODAL ─── */
+  .team-modal { width: 440px; }
+  .team-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .team-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; background: #f9fafb;
+    border-radius: 10px; border: 1px solid #f0f0f0;
+  }
+  .team-item .avatar-lg { width: 36px; height: 36px; border-radius: 50%; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+  .team-item .info { flex: 1; }
+  .team-item .info .name { font-size: 14px; font-weight: 600; color: #1a1a2e; }
+  .team-item .info .role { font-size: 12px; color: #9ca3af; margin-top: 1px; }
+  .team-item .del-btn {
+    background: none; border: none; cursor: pointer;
+    color: #d1d5db; font-size: 16px; padding: 4px;
+    border-radius: 6px; transition: all 0.15s; line-height: 1;
+  }
+  .team-item .del-btn:hover { color: #ef4444; background: #fee2e2; }
+  .add-member-row { display: flex; gap: 8px; }
+  .add-member-row input { flex: 1; padding: 9px 13px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; }
+  .add-member-row input:focus { border-color: #6c63ff; box-shadow: 0 0 0 3px rgba(108,99,255,0.1); }
+  .add-member-row select { padding: 9px 13px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; font-family: inherit; outline: none; color: #1a1a2e; }
+  .add-member-row .btn-sm { padding: 9px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; background: #6c63ff; color: #fff; white-space: nowrap; }
+  .add-member-row .btn-sm:hover { background: #5b52e0; }
+  .section-label { font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+  .empty-team { text-align: center; padding: 20px; color: #d1d5db; font-size: 13px; }
 
   ::-webkit-scrollbar { width: 5px; height: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -281,7 +223,10 @@
 <div class="topbar">
   <div class="brand"><span class="dot"></span>Growth-onomics Task Board</div>
   <div class="meta">Assigned to AI Agent</div>
-  <div class="agent-badge"><span class="pulse"></span>Agent Online</div>
+  <div class="topbar-right">
+    <button class="btn-team" onclick="openTeamModal()">👥 Team</button>
+    <div class="agent-badge"><span class="pulse"></span>Agent Online</div>
+  </div>
 </div>
 
 <!-- STATS BAR -->
@@ -312,9 +257,7 @@
 </div>
 
 <!-- CLIENT TABS -->
-<div class="client-nav" id="client-nav">
-  <!-- rendered by JS -->
-</div>
+<div class="client-nav" id="client-nav"></div>
 
 <!-- KANBAN BOARD -->
 <div class="main">
@@ -340,10 +283,10 @@
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- ADD TASK MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <h2>New Task</h2>
+    <h2>✏️ New Task</h2>
     <div class="form-group">
       <label>Task Title</label>
       <input type="text" id="f-title" placeholder="What needs to be done?" />
@@ -364,12 +307,8 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Assigned By</label>
-        <select id="f-assignee">
-          <option value="ST">Stelios</option>
-          <option value="MT">Muhammad Talha</option>
-          <option value="AI">AI Agent</option>
-        </select>
+        <label>Created By</label>
+        <select id="f-assignee"></select>
       </div>
     </div>
     <div class="form-row">
@@ -408,10 +347,37 @@
   </div>
 </div>
 
-<script>
-  // ─── CONFIG ──────────────────────────────────────────
-  const STORAGE_KEY = 'growth_tasks_v2';
+<!-- TEAM MODAL -->
+<div class="modal-overlay" id="team-modal">
+  <div class="modal team-modal">
+    <h2>👥 Manage Team</h2>
+    <div class="section-label">Current Members</div>
+    <div class="team-list" id="team-list"></div>
+    <div class="section-label">Add New Member</div>
+    <div class="add-member-row">
+      <input type="text" id="tm-name" placeholder="Full name" />
+      <select id="tm-role">
+        <option value="SEO Specialist">SEO Specialist</option>
+        <option value="Ads Manager">Ads Manager</option>
+        <option value="Content Writer">Content Writer</option>
+        <option value="Developer">Developer</option>
+        <option value="Account Manager">Account Manager</option>
+        <option value="AI Agent">AI Agent</option>
+      </select>
+      <button class="btn-sm" onclick="addMember()">Add</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeTeamModal()">Done</button>
+    </div>
+  </div>
+</div>
 
+<script>
+  // ─── STORAGE KEYS ────────────────────────────────────
+  const TASK_KEY   = 'growth_tasks_v3';
+  const MEMBER_KEY = 'growth_members_v1';
+
+  // ─── CLIENTS ─────────────────────────────────────────
   const CLIENTS = {
     all:   { label: 'All Clients', dot: 'cdot-all'   },
     karma: { label: 'Karma Developers', dot: 'cdot-karma', pill: 'cp-karma' },
@@ -421,29 +387,62 @@
     gen:   { label: 'General',         dot: 'cdot-all',   pill: 'cp-gen'   }
   };
 
-  const ASSIGNEES = {
-    ST: { label: 'Stelios',   cls: 'av-s' },
-    MT: { label: 'M. Talha', cls: 'av-m' },
-    AI: { label: 'AI Agent', cls: 'av-a' }
-  };
-
   const TAGS = {
-    seo:     { label: 'SEO',     cls: 'tag-seo'     },
-    ads:     { label: 'Ads',     cls: 'tag-ads'      },
-    content: { label: 'Content', cls: 'tag-content'  },
-    dev:     { label: 'Dev',     cls: 'tag-dev'      },
-    report:  { label: 'Report',  cls: 'tag-report'   }
+    seo:     { label: 'SEO',     cls: 'tag-seo'    },
+    ads:     { label: 'Ads',     cls: 'tag-ads'    },
+    content: { label: 'Content', cls: 'tag-content'},
+    dev:     { label: 'Dev',     cls: 'tag-dev'    },
+    report:  { label: 'Report',  cls: 'tag-report' }
   };
 
   let activeClient = 'all';
 
-  function loadTasks() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  // ─── MEMBER HELPERS ──────────────────────────────────
+  function loadMembers() {
+    try { return JSON.parse(localStorage.getItem(MEMBER_KEY)) || []; }
     catch(e) { return []; }
   }
-  function saveTasks(t) { localStorage.setItem(STORAGE_KEY, JSON.stringify(t)); }
+  function saveMembers(m) { localStorage.setItem(MEMBER_KEY, JSON.stringify(m)); }
+
+  function avatarColor(name) {
+    const colors = ['#6c63ff','#0ea5e9','#f59e0b','#22c55e','#ec4899','#ef4444','#8b5cf6','#14b8a6'];
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+    return colors[Math.abs(h) % colors.length];
+  }
+
+  function initials(name) {
+    return name.trim().split(/\s+/).map(w => w[0]).join('').toUpperCase().slice(0,2);
+  }
+
+  function seedMembersIfEmpty() {
+    if (loadMembers().length > 0) return;
+    saveMembers([
+      { id: 'm1', name: 'Stelios',        role: 'SEO Specialist' },
+      { id: 'm2', name: 'Muhammad Talha', role: 'Ads Manager'    },
+      { id: 'm3', name: 'AI Agent',       role: 'AI Agent'       }
+    ]);
+  }
+
+  // ─── TASK HELPERS ────────────────────────────────────
+  function loadTasks() {
+    try { return JSON.parse(localStorage.getItem(TASK_KEY)) || []; }
+    catch(e) { return []; }
+  }
+  function saveTasks(t) { localStorage.setItem(TASK_KEY, JSON.stringify(t)); }
   function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function formatDate(ts) { return new Date(ts).toLocaleDateString('en-GB',{day:'numeric',month:'short'}); }
+
+  // ─── POPULATE MEMBER DROPDOWN ────────────────────────
+  function populateMemberDropdown() {
+    const members = loadMembers();
+    const sel = document.getElementById('f-assignee');
+    const current = sel.value;
+    sel.innerHTML = members.map(m =>
+      `<option value="${m.id}">${escHtml(m.name)}</option>`
+    ).join('');
+    if (current && members.find(m => m.id === current)) sel.value = current;
+  }
 
   // ─── CLIENT TABS ────────────────────────────────────
   function renderClientNav() {
@@ -451,11 +450,9 @@
     const counts = {};
     Object.keys(CLIENTS).forEach(k => counts[k] = 0);
     tasks.forEach(t => { counts[t.client] = (counts[t.client]||0)+1; });
-    const total = tasks.length;
-
     const nav = document.getElementById('client-nav');
     nav.innerHTML = Object.entries(CLIENTS).map(([key, c]) => {
-      const n = key === 'all' ? total : (counts[key]||0);
+      const n = key === 'all' ? tasks.length : (counts[key]||0);
       return `<button class="client-tab ${activeClient===key?'active':''}" onclick="setClient('${key}')">
         <span class="cdot ${c.dot}"></span>${c.label}
         <span class="tab-badge">${n}</span>
@@ -463,16 +460,18 @@
     }).join('');
   }
 
-  function setClient(key) {
-    activeClient = key;
-    render();
-  }
+  function setClient(key) { activeClient = key; render(); }
 
-  // ─── RENDER ─────────────────────────────────────────
+  // ─── RENDER BOARD ────────────────────────────────────
   function renderCard(task) {
-    const a  = ASSIGNEES[task.assignee] || ASSIGNEES.AI;
+    const members = loadMembers();
+    const member  = members.find(m => m.id === task.assignee);
     const t  = TAGS[task.tag] || TAGS.seo;
     const cl = CLIENTS[task.client] || CLIENTS.gen;
+    const mName = member ? member.name : 'Unknown';
+    const mRole = member ? member.role : '';
+    const mColor = avatarColor(mName);
+    const mInit  = initials(mName);
 
     const progressHtml = task.status === 'active' && task.progress !== undefined ? `
       <div class="progress-wrap">
@@ -490,9 +489,12 @@
       <div class="task-tags"><span class="tag ${t.cls}">${t.label}</span></div>
       ${progressHtml}
       <div class="task-meta">
-        <div class="assignee">
-          <div class="avatar ${a.cls}">${task.assignee}</div>
-          <span class="assignee-name">${a.label}</span>
+        <div class="member-row">
+          <div class="avatar" style="background:${mColor}">${mInit}</div>
+          <div>
+            <div class="member-name">${escHtml(mName)}</div>
+            <div class="member-label">${escHtml(mRole)}</div>
+          </div>
         </div>
         <span class="task-date">${formatDate(task.createdAt)}</span>
       </div>
@@ -501,7 +503,6 @@
 
   function render() {
     renderClientNav();
-
     const all   = loadTasks();
     const tasks = activeClient === 'all' ? all : all.filter(t => t.client === activeClient);
     const cols  = { todo:[], active:[], done:[], blocked:[] };
@@ -520,14 +521,13 @@
       document.getElementById('count-'+s).textContent = cols[s].length;
     });
 
-    // Stats always reflect current filter
     document.getElementById('stat-total').textContent   = tasks.length;
     document.getElementById('stat-active').textContent  = cols.active.length;
     document.getElementById('stat-done').textContent    = cols.done.length;
     document.getElementById('stat-blocked').textContent = cols.blocked.length;
   }
 
-  // ─── ACTIONS ────────────────────────────────────────
+  // ─── TASK ACTIONS ────────────────────────────────────
   const STATUS_CYCLE = { todo:'active', active:'done', done:'todo', blocked:'todo' };
 
   function cycleStatus(id) {
@@ -542,30 +542,25 @@
     render();
   }
 
-  function clearDone() {
-    saveTasks(loadTasks().filter(t => t.status !== 'done'));
-    render();
-  }
+  function clearDone() { saveTasks(loadTasks().filter(t => t.status !== 'done')); render(); }
 
-  // ─── MODAL ──────────────────────────────────────────
-  let _defaultStatus = 'todo';
-
+  // ─── TASK MODAL ──────────────────────────────────────
   function openModal(status) {
-    _defaultStatus = status || 'todo';
-    document.getElementById('f-status').value = _defaultStatus;
+    populateMemberDropdown();
+    document.getElementById('f-status').value = status || 'todo';
     document.getElementById('f-title').value  = '';
     document.getElementById('f-desc').value   = '';
     if (activeClient !== 'all') document.getElementById('f-client').value = activeClient;
     document.getElementById('modal').classList.add('open');
     setTimeout(() => document.getElementById('f-title').focus(), 50);
   }
-
   function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
   function addTask() {
     const title = document.getElementById('f-title').value.trim();
     if (!title) { document.getElementById('f-title').focus(); return; }
     const tasks = loadTasks();
+    const status = document.getElementById('f-status').value;
     tasks.push({
       id:        'task_' + Date.now(),
       title,
@@ -574,8 +569,8 @@
       assignee:  document.getElementById('f-assignee').value,
       tag:       document.getElementById('f-tag').value,
       priority:  document.getElementById('f-priority').value,
-      status:    document.getElementById('f-status').value,
-      progress:  document.getElementById('f-status').value === 'active' ? 25 : 0,
+      status,
+      progress:  status === 'active' ? 25 : 0,
       createdAt: Date.now()
     });
     saveTasks(tasks);
@@ -586,22 +581,75 @@
   document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
   document.getElementById('f-title').addEventListener('keydown', e => { if(e.key==='Enter') addTask(); });
 
-  // ─── SEED ───────────────────────────────────────────
-  function seedIfEmpty() {
+  // ─── TEAM MODAL ──────────────────────────────────────
+  function openTeamModal() {
+    renderTeamList();
+    document.getElementById('team-modal').classList.add('open');
+    setTimeout(() => document.getElementById('tm-name').focus(), 50);
+  }
+  function closeTeamModal() {
+    document.getElementById('team-modal').classList.remove('open');
+    render();
+  }
+
+  function renderTeamList() {
+    const members = loadMembers();
+    const list = document.getElementById('team-list');
+    if (!members.length) {
+      list.innerHTML = '<div class="empty-team">No team members yet. Add one below.</div>';
+      return;
+    }
+    list.innerHTML = members.map(m => `
+      <div class="team-item">
+        <div class="avatar-lg" style="background:${avatarColor(m.name)}">${initials(m.name)}</div>
+        <div class="info">
+          <div class="name">${escHtml(m.name)}</div>
+          <div class="role">${escHtml(m.role)}</div>
+        </div>
+        <button class="del-btn" onclick="removeMember('${m.id}')" title="Remove">✕</button>
+      </div>`).join('');
+  }
+
+  function addMember() {
+    const name = document.getElementById('tm-name').value.trim();
+    if (!name) { document.getElementById('tm-name').focus(); return; }
+    const role = document.getElementById('tm-role').value;
+    const members = loadMembers();
+    members.push({ id: 'mb_' + Date.now(), name, role });
+    saveMembers(members);
+    document.getElementById('tm-name').value = '';
+    renderTeamList();
+  }
+
+  function removeMember(id) {
+    saveMembers(loadMembers().filter(m => m.id !== id));
+    renderTeamList();
+  }
+
+  document.getElementById('team-modal').addEventListener('click', function(e) { if(e.target===this) closeTeamModal(); });
+  document.getElementById('tm-name').addEventListener('keydown', e => { if(e.key==='Enter') addMember(); });
+
+  // ─── SEED DATA ───────────────────────────────────────
+  function seedTasksIfEmpty() {
     if (loadTasks().length > 0) return;
+    const members = loadMembers();
+    const m1 = members[0]?.id || 'm1';
+    const m2 = members[1]?.id || 'm2';
     saveTasks([
-      { id:'t1', client:'hola',  title:'Audit holaprime.com SEO',         desc:'Full technical + content audit, identify quick wins',     assignee:'ST', tag:'seo',     priority:'high',   status:'todo',    progress:0,   createdAt: Date.now()-86400000*2 },
-      { id:'t2', client:'karma', title:'Google Ads campaign review',       desc:'Check ROAS for last 30 days, flag underperformers',      assignee:'MT', tag:'ads',     priority:'high',   status:'active',  progress:40,  createdAt: Date.now()-86400000   },
-      { id:'t3', client:'cdma',  title:'Monthly performance report',       desc:'Compile rankings, traffic, and conversion data',         assignee:'ST', tag:'report',  priority:'medium', status:'active',  progress:70,  createdAt: Date.now()-86400000*3 },
-      { id:'t4', client:'stubs', title:'ThePayStubs blog posts (x3)',      desc:'3 x long-form posts targeting HR keywords',              assignee:'MT', tag:'content', priority:'medium', status:'todo',    progress:0,   createdAt: Date.now()-3600000*5  },
-      { id:'t5', client:'cdma',  title:'CDMA landing page copy',           desc:'Rewrite hero section with AEO structure',                assignee:'ST', tag:'content', priority:'low',    status:'done',    progress:100, createdAt: Date.now()-86400000*5 },
-      { id:'t6', client:'karma', title:'Karma Developers backlinks',       desc:'Waiting on client to provide site access',               assignee:'MT', tag:'seo',     priority:'high',   status:'blocked', progress:0,   createdAt: Date.now()-86400000*4 },
-      { id:'t7', client:'hola',  title:'Hola Prime retargeting ads setup', desc:'Build Facebook retargeting audiences from pixel data',   assignee:'MT', tag:'ads',     priority:'medium', status:'todo',    progress:0,   createdAt: Date.now()-3600000*2  },
-      { id:'t8', client:'stubs', title:'Schema markup implementation',     desc:'Add FAQ + HowTo schema to top 10 landing pages',        assignee:'ST', tag:'dev',     priority:'medium', status:'active',  progress:55,  createdAt: Date.now()-86400000*1 }
+      { id:'t1', client:'hola',  title:'Audit holaprime.com SEO',         desc:'Full technical + content audit, identify quick wins',   assignee:m1, tag:'seo',     priority:'high',   status:'todo',    progress:0,   createdAt: Date.now()-86400000*2 },
+      { id:'t2', client:'karma', title:'Google Ads campaign review',       desc:'Check ROAS for last 30 days, flag underperformers',    assignee:m2, tag:'ads',     priority:'high',   status:'active',  progress:40,  createdAt: Date.now()-86400000   },
+      { id:'t3', client:'cdma',  title:'Monthly performance report',       desc:'Compile rankings, traffic, and conversion data',       assignee:m1, tag:'report',  priority:'medium', status:'active',  progress:70,  createdAt: Date.now()-86400000*3 },
+      { id:'t4', client:'stubs', title:'ThePayStubs blog posts (x3)',      desc:'3 x long-form posts targeting HR keywords',            assignee:m2, tag:'content', priority:'medium', status:'todo',    progress:0,   createdAt: Date.now()-3600000*5  },
+      { id:'t5', client:'cdma',  title:'CDMA landing page copy',           desc:'Rewrite hero section with AEO structure',              assignee:m1, tag:'content', priority:'low',    status:'done',    progress:100, createdAt: Date.now()-86400000*5 },
+      { id:'t6', client:'karma', title:'Karma Developers backlinks',       desc:'Waiting on client to provide site access',             assignee:m2, tag:'seo',     priority:'high',   status:'blocked', progress:0,   createdAt: Date.now()-86400000*4 },
+      { id:'t7', client:'hola',  title:'Hola Prime retargeting ads',       desc:'Build Facebook retargeting audiences from pixel data', assignee:m2, tag:'ads',     priority:'medium', status:'todo',    progress:0,   createdAt: Date.now()-3600000*2  },
+      { id:'t8', client:'stubs', title:'Schema markup implementation',     desc:'Add FAQ + HowTo schema to top 10 landing pages',      assignee:m1, tag:'dev',     priority:'medium', status:'active',  progress:55,  createdAt: Date.now()-86400000   }
     ]);
   }
 
-  seedIfEmpty();
+  // ─── INIT ────────────────────────────────────────────
+  seedMembersIfEmpty();
+  seedTasksIfEmpty();
   render();
 </script>
 </body>
